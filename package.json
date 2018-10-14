@@ -1,0 +1,22 @@
+{
+  "name": "n-api-image-info",
+  "version": "1.0.0",
+  "description": "A tutorial for understanding the N-API used in node.js for ABI stable native plugins. Provides information about a supplied image via Native Code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "N-API",
+    "Node.js",
+    "C++",
+    "ImageMagick",
+    "Info",
+    "tutorial"
+  ],
+  "author": "Atishay Jain <contact@atishay.me>",
+  "license": "MIT",
+  "dependencies": {
+    "node-addon-api": "^1.5.0"
+  }
+}
