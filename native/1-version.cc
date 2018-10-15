@@ -1,8 +1,6 @@
 #include <Magick++.h>
 #include <napi.h>
 
-using namespace Magick;
-
 /**
  * Method to get the version of ImageMagick.
  **/
@@ -10,6 +8,7 @@ Napi::Value
 GetVersion(const Napi::CallbackInfo &info)
 {
   // return's string
+  // Napi has every JS class - https://nodejs.github.io/node-addon-api/classes.html
   return Napi::String::New(info.Env(), MagickCore::GetMagickVersion(NULL));
 }
 
