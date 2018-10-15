@@ -6,3 +6,10 @@ Image Info - N-API Tutorial
 Here are the native pieces and the order in which they should be read:
 1) Version - Gets the ImageMagick version as a string.
 2) Info - Gets some basic information about the image from imagemagick.
+
+
+# Important Scripts:
+* Recompile
+```
+node-gyp rebuild
+```
