@@ -1,0 +1,39 @@
+<html>
+  <title>N-API in Electron</title>
+  <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <body>
+    <h1>Electron supports N-API</h1>
+    <video id="video" autoplay crossorigin="anonymous"></video>
+    <canvas id="canvas"></canvas>
+    <button id="play"> Play </button>
+    <button id="snap"> Capture </button>
+  </body>
+  <script>
+  window.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("play").addEventListener("click", () => {
+      const canvas = document.getElementById("canvas");
+      const context = canvas.getContext("2d");
+      const video = document.getElementById("video");
+      const videoObj = { video: true, width: { exact: 640 }, height: { exact: 480 } };
+
+      navigator.getUserMedia(videoObj, stream => {
+        video.srcObject = stream;
+        video.play().catch(e => alert(e));
+      }, () => alert("Error capturing video"));
+
+      document.getElementById("snap").addEventListener("click", () => {
+        context.drawImage(video, 0, 0, 640, 480);
+        const data = canvas.toDataURL('image/jpg', 0.85);
+        const fs = require('fs');
+        const nativeImage = require('electron').nativeImage
+        const photo = nativeImage.createFromDataURL(data).toJPEG(85);
+        fs.writeFileSync(__dirname + '/raw.jpg', photo);
+        const editor = require("../build/Release/Edit.node");
+        editor.edit(photo, (err, processed) => {
+          fs.writeFileSync(__dirname + '/edit.jpg', processed);
+        });
+      });
+    });
+  });
+  </script>
+</html>

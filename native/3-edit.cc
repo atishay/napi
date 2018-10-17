@@ -1,6 +1,6 @@
 #include <Magick++.h>
 #include <napi.h>
-const BYTES_IN_A_BUFFER_WORD 4
+#define BYTES_IN_A_BUFFER_WORD 4
 
 class ImageModifier: public Napi::AsyncWorker {
   public:
