@@ -17,12 +17,16 @@ class ImageModifier: public Napi::AsyncWorker {
     // While Buffer deals in words, Blob deals in bytes.
     Magick::Blob blob(data, length * BYTES_IN_A_BUFFER_WORD);
     Magick::Image image(blob);
-    std::vector<Magick::Drawable> drawList;
-    drawList.push_back(Magick::DrawableStrokeColor("red")); // Outline color
-    drawList.push_back(Magick::DrawableStrokeWidth(0));     // Stroke width
-    drawList.push_back(Magick::DrawableFillColor("green")); // Fill color
-    drawList.push_back(Magick::DrawableText(100, 100, std::string("Welcome to Cascadia JS")));
-    image.draw(drawList);
+    image.colorSpace(Magick::GRAYColorspace);
+    image.sketch(0, 20, 120);
+    image.strokeColor("black");
+    image.fillColor("white");
+    image.fontPointsize(50);
+    image.annotate("Cascadia JS 2018", Magick::SouthEastGravity);
+    Magick::Geometry g(20, 20);
+    Magick::Color c(22, 22, 22);
+    image.borderColor(c);
+    image.border(g);
     Magick::Blob output;
     image.write(&output);
     data = malloc(output.length());
