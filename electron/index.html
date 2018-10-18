@@ -1,38 +1,95 @@
 <html>
   <title>N-API in Electron</title>
-  <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <style >
+    html {
+      background: #000;
+    }
+    * {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    h1, h2, p {
+      text-align: center;
+      color: #eee;
+    }
+    #content {
+      width:1024px;
+      height:768px;
+      position: relative;
+      margin:0 auto;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed #aaa;
+    }
+    #canvas, #image {
+      display: none;
+    }
+    #video, #canvas, #image {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      width:100%;
+      height:100%;
+    }
+  </style>
   <body>
-    <h1>Electron supports N-API</h1>
-    <video id="video" autoplay crossorigin="anonymous"></video>
-    <canvas id="canvas" width="1024" height="768"></canvas>
-    <button id="play"> Play </button>
-    <button id="snap"> Capture </button>
+    <h1>Cascadia JS 2018</h1>
+    <h2>N API Souvenir Service</h2>
+    <div id="content">
+      <p>Click here above to start video, click again to get a souvenir. Then click to reset.</p>
+      <img alt="Embedded Image" id="image" src="" />
+      <video id="video" autoplay crossorigin="anonymous"></video>
+      <canvas id="canvas" width="1024" height="768"></canvas>
+    </div>
   </body>
   <script>
   window.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("play").addEventListener("click", () => {
-      const canvas = document.getElementById("canvas");
-      const context = canvas.getContext("2d");
-      const video = document.getElementById("video");
-      const videoObj = { video: true, width: { exact: 1024 }, height: { exact: 768 } };
+    const canvas = document.getElementById("canvas");
+    const context = canvas.getContext("2d");
+    const video = document.getElementById("video");
+    const image = document.getElementById("image");
+    const content = document.getElementById("content");
+    const videoObj = { video: true, width: { exact: 1024 }, height: { exact: 768 } };
+    let videoStream = null;
+    let stage = 0;
 
-      navigator.getUserMedia(videoObj, stream => {
-        video.srcObject = stream;
-        video.play().catch(e => alert(e));
-      }, () => alert("Error capturing video"));
-
-      document.getElementById("snap").addEventListener("click", () => {
-        context.drawImage(video, 0, 0, 1024, 768);
-        const data = canvas.toDataURL('image/jpg', 0.85);
-        const fs = require('fs');
-        const nativeImage = require('electron').nativeImage
-        const photo = nativeImage.createFromDataURL(data).toJPEG(85);
-        fs.writeFileSync(__dirname + '/raw.jpg', photo);
-        const editor = require("../build/Release/Edit.node");
-        editor.edit(photo, (err, processed) => {
-          fs.writeFileSync(__dirname + '/edit.jpg', processed);
-        });
-      });
+    document.body.addEventListener("click", () => {
+      switch(stage) {
+        case 0:
+          navigator.mediaDevices.getUserMedia(videoObj).then(stream => {
+            videoStream = stream;
+            video.srcObject = stream;
+            video.onloadedmetadata = function(e) {
+              video.play().catch(e => alert(e));
+              video.style.display = "block";
+              content.style.border = "none";
+            }
+          }, () => alert("Error capturing video"))
+          .catch(e => alert(e));
+          break;
+        case 1:
+          video.pause();
+          context.drawImage(video, 0, 0, 1024, 768);
+          videoStream.getTracks()[0].stop()
+          const data = canvas.toDataURL('image/jpg', 0.85);
+          const fs = require('fs');
+          const nativeImage = require('electron').nativeImage
+          const photo = nativeImage.createFromDataURL(data).toJPEG(85);
+          // fs.writeFileSync(__dirname + '/raw.jpg', photo);
+          const editor = require("../build/Release/Edit.node");
+          editor.edit(photo, (err, processed) => {
+            const data = processed.toString('base64');
+            image.src = "data:image/jpeg;base64," + data;
+            image.style.display = "block";
+            video.style.display = "none";
+          });
+          stage = -1;
+          break;
+      }
+      stage++;
     });
   });
   </script>
