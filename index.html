@@ -2,7 +2,7 @@
   <title>N-API in Electron</title>
   <style >
     html, body {
-      background: #000;
+      background: #222;
       margin: 0;
       padding: 0;
     }
@@ -51,7 +51,7 @@
       <video id="video" crossorigin="anonymous"></video>
       <canvas id="canvas" width="1024" height="768"></canvas>
     </div>
-    <a download="Cascadia Souvenir.jpg"></a>
+    <a download="CascadiaJS 2018 Souvenir.jpg"></a>
   </body>
   <script>
     const canvas = document.getElementById("canvas");
@@ -96,7 +96,7 @@
           const nativeImage = require('electron').nativeImage
           const photo = nativeImage.createFromDataURL(data).toJPEG(85);
           // fs.writeFileSync(__dirname + '/raw.jpg', photo);
-          const editor = require("../build/Release/Edit.node");
+          const editor = require("./build/Release/Edit.node");
           editor.edit(photo, (err, processed) => {
             const data = processed.toString('base64');
             image.src = "data:image/jpeg;base64," + data;
