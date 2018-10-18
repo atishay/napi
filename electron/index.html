@@ -4,7 +4,7 @@
   <body>
     <h1>Electron supports N-API</h1>
     <video id="video" autoplay crossorigin="anonymous"></video>
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" width="1024" height="768"></canvas>
     <button id="play"> Play </button>
     <button id="snap"> Capture </button>
   </body>
@@ -14,7 +14,7 @@
       const canvas = document.getElementById("canvas");
       const context = canvas.getContext("2d");
       const video = document.getElementById("video");
-      const videoObj = { video: true, width: { exact: 640 }, height: { exact: 480 } };
+      const videoObj = { video: true, width: { exact: 1024 }, height: { exact: 768 } };
 
       navigator.getUserMedia(videoObj, stream => {
         video.srcObject = stream;
@@ -22,7 +22,7 @@
       }, () => alert("Error capturing video"));
 
       document.getElementById("snap").addEventListener("click", () => {
-        context.drawImage(video, 0, 0, 640, 480);
+        context.drawImage(video, 0, 0, 1024, 768);
         const data = canvas.toDataURL('image/jpg', 0.85);
         const fs = require('fs');
         const nativeImage = require('electron').nativeImage

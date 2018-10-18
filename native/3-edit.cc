@@ -11,22 +11,23 @@ class ImageModifier: public Napi::AsyncWorker {
   }
   ~ImageModifier() {}
 
-  // This is a background thread. Node buffers are the only thing we can access
-  // in this background thread.
+  // This is a background thread. Data stored in the node buffers are
+  // the only thing we can access in this background thread.
   void Execute() {
     // While Buffer deals in words, Blob deals in bytes.
     Magick::Blob blob(data, length * BYTES_IN_A_BUFFER_WORD);
-    Magick::Image image(blob);
-    image.colorSpace(Magick::GRAYColorspace);
-    image.sketch(0, 20, 120);
-    image.strokeColor("black");
+    Magick::Image image(blob), image2("water.png");
+    Magick::Geometry g(2 * image.columns(), 2 * image.rows());
+    image2.zoom(g);
+    image.spread(10);
+    image.composite(image2, Magick::CenterGravity, Magick::SrcOverCompositeOp);
+    image.strokeColor("white");
     image.fillColor("white");
-    image.fontPointsize(50);
-    image.annotate("Cascadia JS 2018", Magick::SouthEastGravity);
-    Magick::Geometry g(20, 20);
-    Magick::Color c(22, 22, 22);
-    image.borderColor(c);
-    image.border(g);
+    image.fontFamily("Apple Chancery");
+    image.fontPointsize(30);
+    image.textUnderColor("#00000030");
+    image.annotate(" Cascadia JS 2018 ", Magick::SouthEastGravity);
+    image.frame();
     Magick::Blob output;
     image.write(&output);
     data = malloc(output.length());
