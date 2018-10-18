@@ -10,10 +10,10 @@ function createWindow() {
   mainWindow = new BrowserWindow({ width: 1200, height: 900 })
   // and load the index.html of the app.
   mainWindow.loadFile(__dirname + '/index.html')
-  mainWindow.setFullScreen(true);
+  // mainWindow.setFullScreen(true);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

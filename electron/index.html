@@ -38,6 +38,9 @@
       height:100%;
       object-fit: contain;
     }
+    a {
+      display: none;
+    }
   </style>
   <body>
     <h1>Cascadia JS 2018</h1>
@@ -48,19 +51,23 @@
       <video id="video" crossorigin="anonymous"></video>
       <canvas id="canvas" width="1024" height="768"></canvas>
     </div>
+    <a download="Cascadia Souvenir.jpg"></a>
   </body>
   <script>
-  const canvas = document.getElementById("canvas");
-  const video = document.getElementById("video");
-  const image = document.getElementById("image");
-  const content = document.getElementById("content");
-  const videoObj = { video: true, width: { exact: 1024 }, height: { exact: 768 } };
+    const canvas = document.getElementById("canvas");
+    const video = document.getElementById("video");
+    const image = document.getElementById("image");
+    const content = document.getElementById("content");
+    const anchor = document.querySelector("a");
+    const videoObj = { video: true, width: { exact: 1024 }, height: { exact: 768 } };
 
   window.addEventListener("DOMContentLoaded", () => {
     let videoStream = null;
     let stage = 0;
+    let ignoreClicks = false;
 
     document.body.addEventListener("click", () => {
+      if (ignoreClicks) return;
       document.querySelector("p").style.display = "none";
       switch(stage) {
         case 0:
@@ -95,25 +102,31 @@
             image.src = "data:image/jpeg;base64," + data;
             image.style.display = "block";
             video.style.display = "none";
+            anchor.href = image.src;
+            setTimeout(() => {
+              ignoreClicks = true;
+              anchor.click();
+              ignoreClicks = false;
+            }, 100);
           });
           stage = -1;
           break;
       }
       stage++;
     });
-  });
 
-  function handleResize() {
-    // Handling sizes better.
-    const width = window.innerWidth;
-    const height = window.innerHeight  - content.offsetTop;
-    content.style.width = width;
-    content.style.height = height;
-    videoObj.width.exact = width;
-    videoObj.height.exact = height;
-  }
-  window.onresize = handleResize;
-  handleResize();
+    function handleResize() {
+      // Handling sizes better.
+      const width = window.innerWidth;
+      const height = window.innerHeight  - content.offsetTop;
+      content.style.width = width;
+      content.style.height = height;
+      videoObj.width.exact = width;
+      videoObj.height.exact = height;
+    }
+    window.onresize = handleResize;
+    handleResize();
+  });
 
   </script>
 </html>
