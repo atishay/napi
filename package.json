@@ -4,6 +4,7 @@
   "description": "A tutorial for understanding the N-API used in node.js for ABI stable native plugins. Provides information about a supplied image via Native Code.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "node test/index.js",
     "electron": "electron electron.js"
   },
