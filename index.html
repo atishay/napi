@@ -91,7 +91,7 @@
           const context = canvas.getContext("2d");
           context.drawImage(video, 0, 0, canvas.width,  canvas.height);
           videoStream.getTracks()[0].stop()
-          const imageData = canvas.toDataURL('image/jpg', 0.85);
+          const imageData = canvas.toDataURL('image/jpeg', 0.85);
           let data = "";
           // Electron
           if (window.process && window.process.type) {
@@ -102,7 +102,7 @@
             const editor = require("./build/Release/Edit.node");
             await new Promise ((resolve) => {
               editor.edit(photo, (err, processed) => {
-                data = processed.toString('base64');
+                data = "data:image/jpeg;base64," + processed.toString('base64');
                 resolve();
               });
             });
@@ -112,10 +112,10 @@
               method: 'POST',
               body: imageData
             });
-            data = await rep.text();
+            data = await resp.text();
 
           }
-          image.src = "data:image/jpeg;base64," + data;
+          image.src =  data;
           image.style.display = "block";
           video.style.display = "none";
           anchor.href = image.src;

@@ -22,6 +22,7 @@
   "author": "Atishay Jain <contact@atishay.me>",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "electron": "^3.0.4",
     "express": "^4.16.4",
     "node-addon-api": "^1.5.0"
