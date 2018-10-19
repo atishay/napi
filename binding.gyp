@@ -33,10 +33,10 @@
         }],
         ['OS=="linux" or OS=="solaris" or OS=="freebsd"', { # not windows not mac
           "libraries": [
-            '<!@(pkg-config --libs ImageMagick++)',
+            '<!@(pkg-config --libs Magick++)',
           ],
           'cflags': [
-            '<!@(pkg-config --cflags ImageMagick++)'
+            '<!@(pkg-config --cflags Magick++)'
           ],
         }]
       ]
@@ -68,22 +68,22 @@
               '<!@(pkg-config --libs Magick++)',
           ],
           'cflags': [
-              '<!@(pkg-config --cflags Magick++)'
+            '<!@(pkg-config --cflags Magick++)'
           ]
         }],
         ['OS=="linux" or OS=="solaris" or OS=="freebsd"', { # not windows not mac
           "libraries": [
-            '<!@(pkg-config --libs ImageMagick++)',
+            '<!@(pkg-config --libs Magick++)',
           ],
           'cflags': [
-            '<!@(pkg-config --cflags ImageMagick++)'
+            '<!@(pkg-config --cflags Magick++)'
           ],
         }]
       ]
     }, {
       "target_name": "Edit",
-      "sources": [
-        "native/3-edit.cc"
+          "sources": [
+            "native/3-edit.cc"
       ],
       'cflags!': [ '-fno-exceptions' ],
       'cflags_cc!': [ '-fno-exceptions' ],
@@ -113,10 +113,10 @@
         }],
         ['OS=="linux" or OS=="solaris" or OS=="freebsd"', { # not windows not mac
           "libraries": [
-            '<!@(pkg-config --libs ImageMagick++)',
+            '<!@(pkg-config --libs Magick++)',
           ],
           'cflags': [
-            '<!@(pkg-config --cflags ImageMagick++)'
+            '<!@(pkg-config --cflags Magick++)'
           ],
         }]
       ]

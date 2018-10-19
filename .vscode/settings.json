@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "*.js6": "javascriptreact",
+    "*.tag": "html",
+    "iterator": "cpp",
+    "string": "cpp",
+    "string_view": "cpp",
+    "vector": "cpp",
+    "list": "cpp"
+  }
+}

@@ -66,7 +66,7 @@
     let stage = 0;
     let ignoreClicks = false;
 
-    document.body.addEventListener("click", async () => {
+    const cb =  async () => {
       if (ignoreClicks) return;
       document.querySelector("p").style.display = "none";
       switch(stage) {
@@ -128,7 +128,9 @@
           break;
       }
       stage++;
-    });
+    };
+    document.body.addEventListener("click",cb);
+    document.body.addEventListener("touchstart",cb);
 
     function handleResize() {
       // Handling sizes better.
