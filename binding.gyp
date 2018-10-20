@@ -30,6 +30,14 @@
           'cflags': [
               '<!@(pkg-config --cflags Magick++)'
           ]
+        }],
+        ['OS=="linux" or OS=="solaris" or OS=="freebsd"', { # not windows not mac
+          "libraries": [
+            '<!@(pkg-config --libs ImageMagick++)',
+          ],
+          'cflags': [
+            '<!@(pkg-config --cflags ImageMagick++)'
+          ],
         }]
       ]
     }, {
@@ -62,6 +70,14 @@
           'cflags': [
               '<!@(pkg-config --cflags Magick++)'
           ]
+        }],
+        ['OS=="linux" or OS=="solaris" or OS=="freebsd"', { # not windows not mac
+          "libraries": [
+            '<!@(pkg-config --libs ImageMagick++)',
+          ],
+          'cflags': [
+            '<!@(pkg-config --cflags ImageMagick++)'
+          ],
         }]
       ]
     }, {
@@ -94,6 +110,14 @@
           'cflags': [
               '<!@(pkg-config --cflags Magick++)'
           ]
+        }],
+        ['OS=="linux" or OS=="solaris" or OS=="freebsd"', { # not windows not mac
+          "libraries": [
+            '<!@(pkg-config --libs ImageMagick++)',
+          ],
+          'cflags': [
+            '<!@(pkg-config --cflags ImageMagick++)'
+          ],
         }]
       ]
     }
