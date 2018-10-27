@@ -33,16 +33,16 @@ Napi::Value ProcessImage(const Napi::CallbackInfo &info)
 
   // All JS types are available. JS is not Ruby. Everything is not an object.
   // See https://nodejs.github.io/node-addon-api/class_napi_1_1_value.html for the inheritance chart.
-  auto buffer = info[0].As<Napi::Buffer<uint32_t>>();
-  uint32_t length = buffer.Length();
-  uint32_t* data = buffer.Data();
+  auto buffer = info[0].As<Napi::Buffer<uint8_t>>();
+  uint8_t length = buffer.Length();
+  uint8_t* data = buffer.Data();
 
   /**
    *  Processing in ImageMagick.
    **/
 
   // Create a imagemagick image object
-  Magick::Blob blob(data, length * 4); // 4 bytes in a uint32_t
+  Magick::Blob blob(data, length);
   Magick::Image image(blob);
   double width = image.columns();
   double height = image.rows();
@@ -57,7 +57,7 @@ Napi::Value ProcessImage(const Napi::CallbackInfo &info)
   // An object is a key value map where both keys and values can be anything.
   obj.Set(Napi::String::New(env, "width"), Napi::Number::New(env, width));
   obj.Set(Napi::String::New(env, "height"), Napi::Number::New(env, height));
-  // Buffer object
+
   obj.Set(Napi::String::New(env, "created"), Napi::String::New(env, created));
   obj.Set(Napi::String::New(env, "modified"), Napi::String::New(env, modified));
 
