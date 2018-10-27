@@ -23,7 +23,11 @@ app.get('/', (req, res) => {
 app.post('/', bodyParser.text({ limit: '50mb' }), (req, res) => {
   const requestBuffer = Buffer.from(req.body.split(",")[1], 'base64');
   editor.edit(requestBuffer, (err, buffer) => {
-    res.send("data:image/jpeg;base64," + buffer.toString('base64'));
+    if (buffer) {
+      res.send("data:image/jpeg;base64," + buffer.toString('base64'));
+    } else {
+      res.status(400).send(err);
+    }
   });
 });
 

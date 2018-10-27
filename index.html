@@ -42,7 +42,7 @@
                   image.style.display = "none";
                   video.style.display = "block";
                 }
-              }, () => alert("Error capturing video"));
+          }, (e) => alert(e));
               break;
             case 1:
               const width = video.videoWidth;
@@ -55,6 +55,9 @@
               context.drawImage(video, 0, 0, canvas.width, canvas.height);
               videoStream.getTracks()[0].stop()
               const imageData = canvas.toDataURL('image/jpeg', 0.85);
+          image.src = imageData;
+          image.style.display = "block";
+          video.style.display = "none";
               let data = "";
               // Electron
               if (window.process && window.process.type) {
@@ -92,8 +95,11 @@
           stage++;
         };
 
+    if (!('ontouchstart' in window)) {
         document.body.addEventListener("click", cb);
+    } else {
         document.body.addEventListener("touchstart", cb);
+    }
 
         /*
          * Utilities
