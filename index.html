@@ -1,5 +1,5 @@
 <html>
-  <title>N-API in Electron</title>
+  <title>N-API Demo</title>
   <style >
     html, body {
       background: #222;
@@ -48,7 +48,7 @@
     <div id="content">
       <p>Click here above to start video, click again to get a souvenir. Then click to reset.</p>
       <img alt="Embedded Image" id="image" src="" />
-      <video id="video" crossorigin="anonymous"></video>
+      <video id="video" crossorigin="anonymous" muted playsinline></video>
       <canvas id="canvas" width="1024" height="768"></canvas>
     </div>
     <a download="CascadiaJS 2018 Souvenir.jpg"></a>
@@ -98,7 +98,6 @@
             const fs = require('fs');
             const nativeImage = require('electron').nativeImage;
             const photo = nativeImage.createFromDataURL(imageData).toJPEG(85);
-            // fs.writeFileSync(__dirname + '/raw.jpg', photo);
             const editor = require("./build/Release/Edit.node");
             await new Promise ((resolve) => {
               editor.edit(photo, (err, processed) => {
@@ -115,7 +114,7 @@
             data = await resp.text();
 
           }
-          image.src =  data;
+          image.src = data;
           image.style.display = "block";
           video.style.display = "none";
           anchor.href = image.src;
