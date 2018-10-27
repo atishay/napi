@@ -10,7 +10,7 @@ var http = require('http');
 var https = require('https');
 
 // Keys for SSL
-const privateKey = fs.readFileSync('cert.key', 'utf8');
+const privateKey = fs.readFileSync('key.pem', 'utf8');
 const certificate = fs.readFileSync('cert.pem', 'utf8');
 var credentials = { key: privateKey, cert: certificate };
 

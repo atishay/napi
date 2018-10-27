@@ -74,5 +74,4 @@ typings/
 
 build/*
 test/edit.jpg
-*.pem
-*.key
+production/
