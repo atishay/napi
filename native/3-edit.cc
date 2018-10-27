@@ -1,10 +1,9 @@
 #include <Magick++.h>
 #include <napi.h>
-#define BYTES_IN_A_BUFFER_WORD 4
 
 class ImageModifier: public Napi::AsyncWorker {
   public:
-  ImageModifier(Napi::Buffer<uint32_t> buffer, Napi::Function cb) : Napi::AsyncWorker(cb),
+  ImageModifier(Napi::Buffer<uint8_t> buffer, Napi::Function cb) : Napi::AsyncWorker(cb),
   input(Napi::Persistent(buffer)),
   data(buffer.Data()),
   length(buffer.Length()) {
@@ -15,7 +14,7 @@ class ImageModifier: public Napi::AsyncWorker {
   // the only thing we can access in this background thread.
   void Execute() {
     // While Buffer deals in words, Blob deals in bytes.
-    Magick::Blob blob(data, length * BYTES_IN_A_BUFFER_WORD);
+    Magick::Blob blob(data, length);
     Magick::Image image(blob), image2("water.png");
     Magick::Geometry g(2 * image.columns(), 2 * image.rows());
     image2.zoom(g);
@@ -32,21 +31,21 @@ class ImageModifier: public Napi::AsyncWorker {
     image.write(&output);
     data = malloc(output.length());
     memcpy(data, output.data(), output.length());
-    length = output.length() / BYTES_IN_A_BUFFER_WORD;
+    length = output.length();
   }
 
   void OnOK(){
     Napi::HandleScope scope(Env());
     Callback().Call({Env().Undefined(),
-      Napi::Buffer<uint32_t>::New(Env(),
-        reinterpret_cast<uint32_t *>(data),
-        length, [](Napi::Env env, uint32_t *finalizeData) {
+      Napi::Buffer<uint8_t>::New(Env(),
+        reinterpret_cast<uint8_t *>(data),
+        length, [](Napi::Env env, uint8_t *finalizeData) {
           free(finalizeData);
         })});
   }
 
 private:
-  Napi::Reference<Napi::Buffer<uint32_t>> input;
+  Napi::Reference<Napi::Buffer<uint8_t>> input;
   void *data;
   int length;
 };
@@ -77,7 +76,7 @@ Napi::Value Edit(const Napi::CallbackInfo &info)
   }
   // Async worker deletes itself when the work is complete.
   // Will have more options after - https://github.com/nodejs/node-addon-api/issues/231
-  auto worker = new ImageModifier(info[0].As<Napi::Buffer<uint32_t>>(), info[1].As<Napi::Function>());
+  auto worker = new ImageModifier(info[0].As<Napi::Buffer<uint8_t>>(), info[1].As<Napi::Function>());
   worker->Queue();
   return env.Null();
 }
