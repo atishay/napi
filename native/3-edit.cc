@@ -41,30 +41,32 @@ class ImageModifier: public Napi::AsyncWorker {
     // Add the raid drops overlay
     image.composite(image2, Magick::CenterGravity, Magick::SrcOverCompositeOp);
 
-    auto width = image.rows();
-    auto height = image.columns();
-    // Clip the image and fit into 630x520
-    if (width * 1.0/height > 630.0/520) {
-      g.height(520);
-      g.width(520.0 * width / height);
+    auto height = image.rows();
+    auto width = image.columns();
+    const double INNER_WIDTH = 640.0;
+    const double INNER_HEIGHT = 540.0;
+    // Clip the image and fit into 640x540
+    if (width * 1.0 / height > INNER_WIDTH / INNER_HEIGHT)
+    {
+      g.height(INNER_HEIGHT);
+      g.width(INNER_HEIGHT * width / height);
     } else {
-      g.width(630);
-      g.width(630.0 * height / width);
+      g.width(INNER_WIDTH);
+      g.height(INNER_WIDTH * height / width);
     }
-    image.resize(g);
+    image.scale(g);
 
-    // Stretch to the frame size
+    // Pad to the frame size
     g.width(1000);
     g.height(665);
-    image.extent(g);
-
+    image.extent(g, Magick::CenterGravity);
     image.composite(image3, Magick::CenterGravity, Magick::SrcOverCompositeOp);
     image.strokeColor("white");
     image.fillColor("white");
     image.fontFamily("Apple Chancery");
     image.fontPointsize(30);
     image.annotate(" Cascadia JS 2018 ", Magick::SouthEastGravity);
-    image.frame();
+    // image.frame();
     Magick::Blob output;
     image.write(&output);
     // Though node buffers can take ownership of raw binary data,

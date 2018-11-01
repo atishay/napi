@@ -22,6 +22,9 @@ app.get('/', (req, res) => {
 // The only API - post to perform the image editing.
 app.post('/', bodyParser.text({ limit: '50mb' }), (req, res) => {
   const requestBuffer = Buffer.from(req.body.split(",")[1], 'base64');
+  if (requestBuffer.length === 0) {
+    return res.status(400).send("No image supplied");
+  }
   editor.edit(requestBuffer, (err, buffer) => {
     if (buffer) {
       res.send("data:image/jpeg;base64," + buffer.toString('base64'));
