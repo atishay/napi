@@ -33,16 +33,36 @@ class ImageModifier: public Napi::AsyncWorker {
   void Execute() {
     // Some processing in ImageMagick.
     Magick::Blob blob(data, length);
-    Magick::Image image(blob), image2("water.png");
-    Magick::Geometry g(2 * image.columns(), 2 * image.rows());
+    Magick::Image image(blob), image2("water.png"), image3("car.png");
+    Magick::Geometry g( 2 * image.columns(), 2 * image.rows());
     image2.zoom(g);
+    // Add the raid effect
     image.spread(10);
+    // Add the raid drops overlay
     image.composite(image2, Magick::CenterGravity, Magick::SrcOverCompositeOp);
+
+    auto width = image.rows();
+    auto height = image.columns();
+    // Clip the image and fit into 630x520
+    if (width * 1.0/height > 630.0/520) {
+      g.height(520);
+      g.width(520.0 * width / height);
+    } else {
+      g.width(630);
+      g.width(630.0 * height / width);
+    }
+    image.resize(g);
+
+    // Stretch to the frame size
+    g.width(1000);
+    g.height(665);
+    image.extent(g);
+
+    image.composite(image3, Magick::CenterGravity, Magick::SrcOverCompositeOp);
     image.strokeColor("white");
     image.fillColor("white");
     image.fontFamily("Apple Chancery");
     image.fontPointsize(30);
-    image.textUnderColor("#00000030");
     image.annotate(" Cascadia JS 2018 ", Magick::SouthEastGravity);
     image.frame();
     Magick::Blob output;
