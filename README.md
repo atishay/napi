@@ -35,5 +35,9 @@ npm start
 npm test
 ```
 
+## More resources on the N-API
+* Offical Documentation - https://nodejs.github.io/node-addon-api
+* Official Examples - https://github.com/nodejs/abi-stable-node-addon-examples.git (Must try)
+
 
 Image from: https://pixnio.com/transportation-vehicles/cars-automobile/wet-cold-mirror-dew-rain-car#
