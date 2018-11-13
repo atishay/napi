@@ -50,6 +50,16 @@ Napi::Value ProcessImage(const Napi::CallbackInfo &info)
   /**
    * Returning the data to JavaScript
    **/
+
+  /**
+   * let obj = {
+   *    width: width,
+   *    height: height,
+   *    created: created,
+   *    modified: modified
+   * };
+   * return obj;
+   **/
   Napi::Object obj = Napi::Object::New(env);
   // Simple properties
   // An object is a key value map where both keys and values can be anything.
@@ -65,11 +75,11 @@ Napi::Value ProcessImage(const Napi::CallbackInfo &info)
 /**
  * Initializes a node module.
  **/
-Napi::Object Init(Napi::Env env, Napi::Object exports)
-{
-  // Equivalent to setting `exports.processImage = ProcessImage`
-  exports.Set(Napi::String::New(env, "processImage"), Napi::Function::New(env, ProcessImage));
-  return exports;
+  Napi::Object Init(Napi::Env env, Napi::Object exports)
+  {
+    // Equivalent to setting `exports.processImage = ProcessImage`
+    exports.Set(Napi::String::New(env, "processImage"), Napi::Function::New(env, ProcessImage));
+    return exports;
 }
 
 /**

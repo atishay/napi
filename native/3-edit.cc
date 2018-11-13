@@ -36,9 +36,9 @@ class ImageModifier: public Napi::AsyncWorker {
     Magick::Image image(blob), image2("water.png"), image3("car.png");
     Magick::Geometry g( 2 * image.columns(), 2 * image.rows());
     image2.zoom(g);
-    // Add the raid effect
+    // Add the rain effect
     image.spread(10);
-    // Add the raid drops overlay
+    // Add the rain drops overlay
     image.composite(image2, Magick::CenterGravity, Magick::SrcOverCompositeOp);
 
     auto height = image.rows();

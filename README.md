@@ -2,7 +2,7 @@ Image Info - N-API Tutorial
 ===========================
 > Do not use this on production. This is is meant to be a tutorial and not a production API. The code has been intentionally minimized to ignore many error cases and uses synchronous APIs for simplification.
 
-Sample code which introduces the N-API stable in Node.js since Node 10+. The native code is present in the native folder. The rest of the code is present to demonstrate a sample application.
+Sample code which introduces the N-API stable in Node.js since Node 10+. The native code is present in the native folder. The rest of the code is present to demonstrate a sample application. This code was prepared for the Cascadia JS conference - https://2018.cascadiajs.com/.
 
 Here are the native pieces and the order in which they should be read:
 1) **Version** Gets the ImageMagick version as a string.
