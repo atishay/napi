@@ -45,7 +45,7 @@ Napi::Value ProcessImage(const Napi::CallbackInfo &info)
   double width = image.columns();
   double height = image.rows();
   auto created = image.attribute("date:create");
-  auto modified = image.attribute("date:create");
+  auto modified = image.attribute("date:modified");
 
   /**
    * Returning the data to JavaScript

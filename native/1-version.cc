@@ -17,7 +17,7 @@ GetVersion(const Napi::CallbackInfo &info)
  **/
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
-  // Equivalent to setting `exports.GetVersion = GetVersion`
+  // Equivalent to setting `exports.version = GetVersion`
   exports.Set(Napi::String::New(env, "version"), Napi::Function::New(env, GetVersion));
   return exports;
 }

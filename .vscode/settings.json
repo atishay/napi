@@ -7,5 +7,6 @@
     "string_view": "cpp",
     "vector": "cpp",
     "list": "cpp"
-  }
+  },
+  "python.linting.pylintEnabled": false
 }

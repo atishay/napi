@@ -7,8 +7,8 @@
   {
     "type": "node",
     "request": "launch",
-    "name": "Debug Node Server",
-    "program": "${workspaceFolder}/index.js"
+    "name": "Debug Unit Tests",
+    "program": "${workspaceFolder}/test/index.js"
   },
   {
     "name": "Debug C++",
