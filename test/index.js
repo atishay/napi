@@ -21,8 +21,7 @@ console.info(JSON.stringify(processed, 0, 2));
 
 // 3. Async processing of an image -> image
 // Using callbacks as we wait on https://github.com/nodejs/node-addon-api/issues/231
-// N API is hot of the machine.
-// Once that is resolved it will be async await here.
+// N API is very new. We will have async await very soon.
 const photo = fs.readFileSync(__dirname + '/photo.jpg');
 const editor = require("../build/Release/Edit.node");
 editor.edit(photo, (err, processed) => {
