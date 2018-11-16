@@ -8,6 +8,22 @@ const fs = require("fs");
 const versionFinder = require("../build/Release/Version.node");
 console.info("ImageMagick Version - ", versionFinder.version());
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // 2. Pass an image to get info.
 // Don't use Sync on production. This is for demo purposes.
 const image = fs.readFileSync(__dirname + '/photo.jpg');
@@ -17,6 +33,21 @@ const processed = infoProvider.processImage(image);
 // is the number of characters to use as whitespace -
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
 console.info(JSON.stringify(processed, 0, 2));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // 3. Async processing of an image -> image
