@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 /**
- * Test method try out the new API.
+ * Test file to try out the N-API.
  */
 
 // 1. Module that returns the version number of ImageMagick.
