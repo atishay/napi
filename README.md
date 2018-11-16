@@ -1,6 +1,6 @@
 Image Info - N-API Tutorial
 ===========================
-![](test/edit.png)
+![Sample Output](test/edit.jpg)
 
 > Do not use this on production. This is is meant to be a tutorial and not a production API. The code has been intentionally minimized to ignore many error cases and uses synchronous APIs for simplification.
 
