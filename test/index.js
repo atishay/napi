@@ -26,4 +26,5 @@ const photo = fs.readFileSync(__dirname + '/photo.jpg');
 const editor = require("../build/Release/Edit.node");
 editor.edit(photo, (err, processed) => {
   fs.writeFileSync(__dirname + '/edit.jpg', processed);
+  console.log("done");
 });
