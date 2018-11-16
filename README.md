@@ -1,4 +1,4 @@
-Image Info - N-API Tutorial
+N-API Tutorial
 ===========================
 ![Sample Output](test/edit.jpg)
 
