@@ -12,8 +12,10 @@ Napi::Value ProcessImage(const Napi::CallbackInfo &info)
    **/
   auto env = info.Env();
 
-  // Should validate and not crash the process. This is C++.
-  // There is no process.on('uncaughtException') here.
+  /**
+   *  Should validate and not crash the process. This is C++.
+   * There is no process.on('uncaughtException') here.
+   **/
   if (info.Length() < 1)
   {
     // Throw exceptions in a synchronous method. return error as first argument if callback.
@@ -75,7 +77,7 @@ Napi::Value ProcessImage(const Napi::CallbackInfo &info)
 /**
  * Initializes a node module.
  **/
-  Napi::Object Init(Napi::Env env, Napi::Object exports)
+Napi::Object Init(Napi::Env env, Napi::Object exports)
   {
     // Equivalent to setting `exports.processImage = ProcessImage`
     exports.Set(Napi::String::New(env, "processImage"), Napi::Function::New(env, ProcessImage));

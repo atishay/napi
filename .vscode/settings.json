@@ -9,5 +9,6 @@
     "list": "cpp"
   },
   "python.linting.pylintEnabled": false,
-  "python.pythonPath": "/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python"
+  "python.pythonPath": "/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python",
+  "editor.fontSize": 18
 }
