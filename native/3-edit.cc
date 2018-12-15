@@ -61,9 +61,9 @@ class ImageModifier: public Napi::AsyncWorker {
     g.height(665);
     image.extent(g, Magick::CenterGravity);
     image.composite(image3, Magick::CenterGravity, Magick::SrcOverCompositeOp);
-    image.strokeColor("white");
-    image.fillColor("white");
-    image.fontFamily("Apple Chancery");
+    image.strokeColor(Magick::Color(255, 255, 255));
+    image.fillColor(Magick::Color(255, 255, 255));
+    image.font("Apple Chancery.ttf");
     image.fontPointsize(30);
     image.annotate(" Cascadia JS 2018 ", Magick::SouthEastGravity);
     // image.frame();

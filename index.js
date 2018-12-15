@@ -36,7 +36,8 @@ app.post('/', bodyParser.text({ limit: '50mb' }), (req, res) => {
 
 // Launch the http and http servers.
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
-httpServer.listen(8080);
-httpsServer.listen(8443);
+// const httpsServer = https.createServer(credentials, app);
+httpServer.listen(process.env.PORT || 8080);
+// httpsServer.listen(8443);
 
+console.log("Listening");

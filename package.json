@@ -4,12 +4,13 @@
   "description": "A tutorial for understanding the N-API used in node.js for ABI stable native plugins. Provides information about a supplied image via Native Code.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "node test/index.js",
+    "preinstall": "node preinstall.js",
+    "start": "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:$INIT_CWD/vendor/imagemagick/lib:build/Release;node index.js",
+    "test": "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:$INIT_CWD/vendor/imagemagick/lib;node test/index.js",
     "electron": "electron electron.js"
   },
   "engines": {
-    "node": ">=10"
+    "node": "10"
   },
   "keywords": [
     "N-API",
